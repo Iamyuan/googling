@@ -1,27 +1,19 @@
-require "googling/version"
+require "net/http"
+require "uri"
+require 'pry'
+puts "Enter a word."
+ans = gets.chomp()
 
-module Googling
-  def self.check
-    check = `html2text -version` rescue nil
-    if check 
-      puts "Fine, go next step."
-      true
-    else    
-      puts "Please install the html2text."
-      false
-    end 
-  end
+uri = URI.parse("https://www.google.com?q=#{ans}")
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+request = Net::HTTP::Get.new(uri.request_uri)
 
-  def self.search
-    puts "Enter your search,please."
-    yoursearch = gets.chomp()
-    url = "curl -A Mozilla http://www.google.com/search?q=#{yoursearch} |html2text -width 70"
-    answer = `curl #{url}`
-    puts "#{answer}"
-  end
-end
+response = http.request(request)
+binding.pry
+puts response.code
+# => 301
+puts response["location"] # All headers are lowercase
+# => http://www.google.com/
 
-if Googling.check
-  puts Googling.search
-end
- 
+puts response.body
