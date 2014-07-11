@@ -24,9 +24,26 @@ puts response.message
 #=>ok
 #puts response.class.name
 #=>HTTPOK
-puts response.body
+#puts response.body
 
 page = Nokogiri::HTML(response.body)
-news_links = page.css('h3.r a')
-news_links.each{|link| puts link['href'] }
+page.encoding = 'utf-8'
+news_links = page.css('li.g')
+
+#binding.pry
+puts news_links.length
+
+puts '=======================' 
+
+news_links.each do |link|
+  if link.css('table').empty?
+    puts '======================='
+    puts link.css('h3 a').text
+    puts link.css('div.s span.st').text
+    puts link.css('h3 a').map{|x| x['href']}.to_s.sub!("/url?q=", "")
+  else
+    puts "errpr"
+  end
+end
+
 #binding.pry
