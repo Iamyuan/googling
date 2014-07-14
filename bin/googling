@@ -4,10 +4,7 @@
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
 require 'googling'
 
-puts "please enter the KEY WORDS."
-keywords = gets.chomp('')  
-
-results = Googling.search(keywords)
+results = Googling.search(ARGV.join('+'))
 results.each do |result|
   puts ">>>> "
   puts result.title
