@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# The command line Googling tool.
+
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
+require 'googling'
+
+puts "please enter the KEY WORDS."
+keywords = gets.chomp('')  
+
+results = Googling.search(keywords)
+results.each do |result|
+  puts ">>>> "
+  puts result.title
+  puts result.link
+  puts result.description
+end
