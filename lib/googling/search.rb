@@ -1,13 +1,14 @@
 require 'nokogiri'
 require "net/http"
 require 'uri'
+require 'uri-handler'
 
 module Googling
   class Search
     attr_reader :response, :list
 
     def initialize(keywords)  
-      @keywords = keywords 
+      @keywords = keywords.to_s.to_uri 
     end
 
     def execute
