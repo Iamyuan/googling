@@ -33,7 +33,7 @@ module Googling
       nodes = nodes.select { |r| r.css('table').empty? }
       nodes.map do |r|
         title = r.css('h3 a').text
-        link  = r.css('h3 a')['data-href']
+        link  = r.css('h3 a')['data-href'].to_s
         description = r.css('div.s span.st').text
         Result.new(title: title, link: link, description: description)
       end
