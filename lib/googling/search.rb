@@ -34,7 +34,7 @@ module Googling
       nodes = nodes.select { |r| r.css('table').empty? }
       nodes.map do |r|
         title = r.css('h3 a').text
-        link  = r.css('h3 a').map{|x| x['href'].to_s.sub!("/url?q=","")}
+        link  = r.css('h3 a').first['href'].to_s.sub!("/url?q=","")
         description = r.css('div.s span.st').text
         Result.new(title: title, link: link, description: description)
       end
